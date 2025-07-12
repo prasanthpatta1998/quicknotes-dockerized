@@ -7,6 +7,8 @@ services:
       - "5000:5000"
     env_file:
       - ./backend/.env 
+    networks:
+      - quicknotes-net
     restart: unless-stopped
 
   frontend:
@@ -15,4 +17,11 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - quicknotes-net
     restart: unless-stopped
+
+# 👇 Custom network definition
+networks:
+  quicknotes-net:
+    driver: bridge
