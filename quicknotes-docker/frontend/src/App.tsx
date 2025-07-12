@@ -5,7 +5,7 @@ type Note = {
   content: string;
 };
 
-const API_URL = 'http://localhost:5000/notes'; // Update this if backend is hosted elsewhere
+const API_URL = import.meta.env.VITE_API_URL; // Update this if backend is hosted elsewhere
 
 const App: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -14,7 +14,7 @@ const App: React.FC = () => {
   // Fetch all notes
   const fetchNotes = async () => {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(`${API_URL}/notes`);
       const data = await res.json();
       setNotes(data);
     } catch (err) {
@@ -28,7 +28,7 @@ const App: React.FC = () => {
     if (!content.trim()) return;
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(`${API_URL}/notes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
